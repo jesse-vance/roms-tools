@@ -642,6 +642,30 @@ class Grid:
             add_colorbar=add_colorbar,
         )
 
+    def edit(self):
+        """Open an interactive editor for this grid's land mask and bathymetry.
+
+        Returns a :class:`~roms_tools.setup.grid_editor.GridEditor` instance
+        whose :meth:`~roms_tools.setup.grid_editor.GridEditor.show` method
+        launches the GUI and whose
+        :meth:`~roms_tools.setup.grid_editor.GridEditor.get_grid` method
+        returns the edited grid.
+
+        Requires matplotlib with an interactive backend.  In Jupyter, run
+        ``%matplotlib widget`` (and ``pip install ipympl``) first so that
+        the editor opens in the notebook.
+
+        Examples
+        --------
+        >>> editor = grid.edit()
+        >>> editor.show()
+        >>> edited = editor.get_grid()
+        >>> edited.save("my_grid_edited.nc")
+        """
+        from roms_tools.setup.grid_editor import GridEditor
+
+        return GridEditor(self)
+
     def save(self, filepath: str | Path) -> None:
         """Save the grid information to a netCDF4 file.
 
